@@ -30,26 +30,23 @@ Mentara is a privacy-focused, locally deployed mental health chatbot designed fo
 git clone https://github.com/altair-1/mentara-mental-health-chatbot.git
 cd mentara-mental-health-chatbot
 
-Create virtual environment
+## Create virtual environment
 python -m venv venv
 
-Activate virtual environment
-Windows PowerShell
-venv\Scripts\Activate.ps1
-
-Windows CMD
-venv\Scripts\activate.bat
+## Activate virtual environment
+Windows
+venv\Scripts\activate
 
 macOS/Linux
 source venv/bin/activate
 
-Install dependencies
+## Install dependencies
 pip install -r requirements.txt
 
 Download NLTK data
 python -c "import nltk; nltk.download('vader_lexicon')"
 
-Train Rasa model
+## Train Rasa model
 rasa train --force
 
 
