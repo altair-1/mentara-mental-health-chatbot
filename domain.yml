@@ -1,0 +1,169 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - mood_great
+  - mood_unhappy
+  - exam_anxiety
+  - family_pressure
+  - peer_pressure
+  - crisis_indication
+  - ask_help
+  - start_assessment
+  - bot_challenge
+  - out_of_scope
+  - compare_with_chatgpt
+  - nlu_fallback
+  - chitchat
+  - faq
+  - boredom
+  - provide_name
+
+slots:
+  sentiment_score:
+    type: float
+    initial_value: 0.0
+    mappings:
+    - type: custom
+  
+  previous_mood:
+    type: text
+    initial_value: null
+    mappings:
+    - type: custom
+  
+  conversation_context:
+    type: text
+    initial_value: null
+    mappings:
+    - type: custom
+  
+  crisis_level:
+    type: text
+    initial_value: "none"
+    mappings:
+    - type: custom
+    
+  assessment_step:
+    type: float
+    initial_value: 0
+    mappings:
+    - type: custom
+    
+  assessment_type:
+    type: text
+    initial_value: null
+    mappings:
+    - type: custom
+
+  last_response_type:
+    type: text
+    initial_value: null
+    mappings:
+    - type: custom
+
+  trusted_person_name:
+    type: text
+    initial_value: null
+    mappings:
+    - type: custom
+
+  breathing_offer:
+    type: bool
+    initial_value: false
+    mappings:
+    - type: custom
+
+  last_user_message:
+    type: text
+    initial_value: null
+    mappings:
+    - type: custom
+
+  trusted_person_mentioned:
+    type: bool
+    initial_value: false
+    mappings:
+    - type: custom
+
+  conversation_phase:
+    type: text
+    initial_value: "initial"
+    mappings:
+    - type: custom
+
+  offered_strategy:
+    type: text
+    initial_value: null
+    mappings:
+    - type: custom
+
+  used_strategies:
+    type: list
+    initial_value: []
+    mappings:
+    - type: custom
+
+  technique_used:
+    type: text
+    initial_value: null
+    mappings:
+    - type: custom
+
+responses:
+  utter_greet:
+    - text: "Hello, I'm Mentara, your mental health support companion. How are you feeling today?"
+    - text: "Hi there. I'm Mentara, your professional mental health companion. How can I help you today?"
+    - text: "Welcome. I'm here to provide mental health support. What's on your mind?"
+
+  utter_goodbye:
+    - text: "Take care of yourself. Your mental health matters, and please reach out again if you need someone to talk to."
+    - text: "I hope you get some good rest. Remember that I'm here whenever you need support. Sleep well."
+    - text: "Thank you for sharing with me today. Rest well, and remember that professional help is available if you need additional support."
+
+  utter_iamabot:
+    - text: "I'm Mentara, an AI-powered mental health support system designed using evidence-based therapeutic principles."
+
+  utter_default:
+    - text: "I want to understand better. Can you tell me more about how you're feeling?"
+    - text: "I'm here for mental health support. What's on your mind emotionally?"
+
+  utter_chitchat/random_talk:
+    - text: "I'm here for mental health support. How are you feeling today?"
+
+  utter_faq/about_bot:
+    - text: "I'm Mentara, specialized for mental health support using evidence-based techniques. How can I help you today?"
+
+actions:
+  - action_analyze_sentiment
+  - action_respond_to_mood
+  - action_provide_coping_strategies
+  - action_detect_crisis
+  - action_handle_exam_stress
+  - action_handle_family_pressure
+  - action_start_assessment_choice
+  - action_start_phq9
+  - action_start_gad7
+  - action_redirect_to_mental_health
+  - action_ask_followup
+  - action_provide_ongoing_support
+  - action_default_fallback
+  - action_provide_professional_differentiation
+  - action_handle_trusted_person
+  - action_provide_breathing_exercise
+  - action_handle_breathing_decline
+  - action_provide_grounding_exercise
+  - action_provide_progressive_relaxation
+  - action_provide_thought_exploration
+  - respond_chitchat
+  - respond_faq
+  - action_provide_offered_technique  
+  - action_exit_crisis
+
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

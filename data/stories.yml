@@ -1,0 +1,66 @@
+version: "3.1"
+
+stories:
+
+- story: greet path
+  steps:
+  - intent: greet
+  - action: utter_greet
+
+- story: positive mood support
+  steps:
+  - intent: mood_great
+  - action: action_analyze_sentiment
+  - action: action_respond_to_mood
+
+- story: unhappy mood support
+  steps:
+  - intent: mood_unhappy
+  - action: action_analyze_sentiment
+  - action: action_respond_to_mood
+
+- story: crisis detected
+  steps:
+  - intent: crisis_indication
+  - action: action_detect_crisis
+
+- story: exam stress journey
+  steps:
+  - intent: exam_anxiety
+  - action: action_handle_exam_stress
+
+- story: family pressure specific
+  steps:
+  - intent: family_pressure
+  - action: action_handle_family_pressure
+
+- story: mental health assessment
+  steps:
+  - intent: start_assessment
+  - action: action_start_assessment_choice
+
+- story: ask for help
+  steps:
+  - intent: ask_help
+  - action: action_analyze_sentiment
+  - action: action_respond_to_mood
+
+- story: bot challenge
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot
+
+- story: goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: compare with other AI
+  steps:
+  - intent: compare_with_chatgpt
+  - action: action_provide_professional_differentiation
+
+- story: out of scope redirect
+  steps:
+  - intent: out_of_scope
+  - action: action_redirect_to_mental_health

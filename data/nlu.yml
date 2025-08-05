@@ -1,0 +1,342 @@
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - hey there
+    - hi mentara
+    - hello mentara
+    - sup
+    - whats up
+    - namaste
+    - start
+    - begin
+
+- intent: goodbye
+  examples: |
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+    - talk to you later
+    - gotta go
+    - catch you later
+
+- intent: affirm
+  examples: |
+    - yes
+    - y
+    - indeed
+    - of course
+    - that sounds good
+    - correct
+    - yeah
+    - yep
+    - sure
+    - absolutely
+    - it did
+    - it helped
+    - that helped
+    - yes it did
+    - right
+    - true
+    - ok
+    - okay
+
+- intent: deny
+  examples: |
+    - no
+    - n
+    - never
+    - I don't think so
+    - don't like that
+    - no way
+    - not really
+    - nope
+    - not at all
+    - it didn't
+    - it didn't help
+    - that didn't help
+    - no it didn't
+    - wrong
+    - disagree
+
+- intent: mood_great
+  examples: |
+    - perfect
+    - great
+    - amazing
+    - wonderful
+    - I am feeling very good
+    - I am great
+    - I am amazing
+    - extremely good
+    - so good
+    - so perfect
+    - good
+    - fine
+    - i'm fine
+    - i'm good
+    - i'm okay
+    - doing well
+    - feeling happy
+    - feeling positive
+    - excellent
+    - fantastic
+    - brilliant
+    - awesome
+    - feeling great today
+    - having a good day
+    - i feel amazing
+    - everything is wonderful
+    - life is good
+    - feeling on top of the world
+    - pretty good
+    - not bad
+    - alright
+    - feeling better now
+    - i feel better now
+    - i'm feeling better now
+    - feeling much better
+
+
+- intent: mood_unhappy
+  examples: |
+    - i am feeling really sad today
+    - my day was horrible
+    - I am sad
+    - I don't feel very well
+    - I am disappointed
+    - super sad
+    - I'm so sad
+    - sad
+    - very sad
+    - unhappy
+    - not good
+    - not very good
+    - extremely sad
+    - so sad
+    - bad
+    - feeling down
+    - feeling low
+    - i'm depressed
+    - not so good
+    - terrible
+    - awful
+    - i feel terrible
+    - i'm not okay
+    - stressed
+    - anxious
+    - worried
+    - upset
+    - devastated
+    - miserable
+    - gloomy
+    - dejected
+    - not feeling great
+    - not feeling so good
+    - not okay
+    - i'm not doing well
+    - not doing great today
+
+
+- intent: exam_anxiety
+  examples: |
+    - I'm worried about my exams
+    - exams are coming and I'm stressed
+    - can't focus on studies
+    - failing my exams
+    - exam pressure is too much
+    - scared of bad marks
+    - parents will be disappointed if I fail
+    - competitive exam stress
+    - board exam tension
+    - placement exam worry
+    - nervous about tests
+    - can't sleep because of exams
+    - exam fear
+    - test anxiety
+    - studying is overwhelming
+    - too much syllabus
+    - exam results stress
+    - I'm stressed about my exams
+    - I'm stressed
+    - exam stress
+    - feeling stressed
+    - stress about studies
+    - worried about tests
+
+- intent: family_pressure
+  examples: |
+    - my parents don't understand me
+    - family expectations are too high
+    - they want me to be someone I'm not
+    - constant comparison with others
+    - family fights stress me out
+    - parents are forcing career choice
+    - family doesn't support my dreams
+    - parents always criticize me
+    - family pressure about marriage
+    - relatives always judge me
+    - parents compare me to siblings
+    - family doesn't listen to me
+
+- intent: peer_pressure
+  examples: |
+    - my friends are doing better than me
+    - feeling left out from friend groups
+    - social anxiety with classmates
+    - comparison with peers
+    - friends don't include me
+    - feeling inferior to others
+    - campus social pressure
+
+- intent: crisis_indication
+  examples: |
+    - i feel hopeless
+    - I want to hurt myself
+    - thinking of ending my life
+    - life has no meaning
+    - nobody cares about me
+    - better off dead
+    - suicidal thoughts
+    - want to disappear
+    - can't take it anymore
+    - hopeless situation
+    - everything is pointless
+    - want to give up
+    - nothing matters anymore
+    - feeling worthless
+    - no reason to live
+    - world would be better without me
+    - want to kill myself
+    - suicide
+    - end my life
+    - hurt myself
+
+- intent: ask_help
+  examples: |
+    - I need help
+    - can you help me
+    - I don't know what to do
+    - please guide me
+    - what should I do
+    - need advice
+    - support me
+    - assist me
+    - I'm lost
+    - need guidance
+    - help me please
+
+- intent: start_assessment
+  examples: |
+    - I want to take a mental health test
+    - can you assess my depression
+    - check my anxiety levels
+    - mental health questionnaire
+    - PHQ-9 test
+    - GAD-7 assessment
+    - evaluate my condition
+    - Depression test please
+    - Check my anxiety levels
+    - depression screening
+    - anxiety screening
+    - mental health check
+    - test my mental health
+    - depression test
+    - anxiety test
+
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+    - who are you
+    - what are you
+    - are you real
+    - are you a person
+
+- intent: out_of_scope
+  examples: |
+    - I like pizza
+    - recommend a movie
+    - how to cook pasta
+    - sports news
+    - celebrity news
+
+- intent: compare_with_chatgpt
+  examples: |
+    - how are you different from chatgpt
+    - what makes you special
+    - why should I use you instead of chatgpt
+    - how are you better than other ai
+    - what's unique about you
+    - difference between you and other bots
+    - why mentara over other assistants
+    - what makes you different
+
+- intent: nlu_fallback
+  examples: |
+    - asdfghjkl
+    - random text
+    - what
+    - hmm
+    - ????
+    - i don't know
+    - whatever
+    - xyz
+    - blah
+
+- intent: chitchat
+  examples: |
+    - what's the weather like
+    - is it raining
+    - weather today
+    - tell me a joke
+    - random stuff
+    - pizza
+    - movies
+    - music
+
+- intent: faq
+  examples: |
+    - what can you do
+    - how do you work
+    - what are your capabilities
+    - is this private
+    - do you store my data
+    - privacy policy
+
+- intent: boredom
+  examples: |
+    - im bored
+    - i'm bored
+    - feeling bored
+    - nothing to do
+    - bored
+
+- intent: provide_name
+  examples: |
+    - rahul
+    - sarah
+    - john
+    - my friend sarah
+    - my sister
+    - mom
+    - dad
+    - teacher
+    - amit
+    - priya

@@ -1,0 +1,754 @@
+{% load static %}
+
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="utf-8"> <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+<title>Mentara - Mental Health Companion</title>
+<meta content="AI-powered mental health chatbot for personalized support" name="description">
+<meta content="mental health, chatbot, therapy, support, AI, wellness" name="keywords">
+
+<!-- Favicons -->
+<link href="{% static 'img/chatbot.png' %}" rel="icon">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- AOS CSS -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<!-- Vendor CSS Files -->
+<link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
+<link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+<link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+<link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+<link href="{% static 'vendor/swiper/swiper-bundle.min.css' %} " rel="stylesheet">
+
+<!-- Custom CSS -->
+<style>
+    :root {
+        --primary-color: #5e72eb;
+        --secondary-color: #7eb6ff;
+        --light-color: #f8f9fa;
+        --dark-color: #343a40;
+        --accent-color: #62c9e8;
+    }
+    
+    html {
+        scroll-behavior: smooth;
+    }
+    
+    body {
+        font-family: 'Poppins', sans-serif;
+        color: #444;
+        background-color: #fff;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+    }
+    
+    a {
+        color: var(--primary-color);
+        text-decoration: none;
+    }
+    
+    a:hover {
+        color: var(--secondary-color);
+        text-decoration: none;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+    }
+    
+    /* Scroll Progress Bar */
+    .scroll-progress-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: transparent;
+        z-index: 1001;
+    }
+    
+    .scroll-progress-bar {
+        height: 100%;
+        background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        width: 0%;
+        transition: width 0.1s ease;
+    }
+    
+    /* Section Animation */
+    .section-animated {
+        animation: sectionFadeIn 1s ease;
+    }
+    
+    @keyframes sectionFadeIn {
+        0% { opacity: 0.7; transform: scale(0.98); }
+        100% { opacity: 1; transform: scale(1); }
+    }
+    
+    /* Header */
+    #header {
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        padding: 15px 0;
+        margin: 0;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+    }
+    
+    #header .logo {
+        font-size: 28px;
+        font-weight: 700;
+        margin: 0;
+        padding: 0;
+    }
+    
+    #header .logo a {
+        color: var(--primary-color);
+    }
+    
+    #header .logo span {
+        color: var(--secondary-color);
+    }
+    
+    .navbar {
+        padding: 0;
+    }
+    
+    .navbar ul {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        list-style: none;
+        align-items: center;
+    }
+    
+    .navbar li {
+        position: relative;
+        margin-left: 30px;
+    }
+    
+    .navbar a, .navbar a:focus {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 0;
+        font-size: 15px;
+        font-weight: 500;
+        color: #555;
+        white-space: nowrap;
+        transition: 0.3s;
+    }
+    
+    .navbar a:hover, .navbar .active, .navbar .active:focus, .navbar li:hover > a {
+        color: var(--primary-color);
+    }
+    
+    .navbar .getstarted, .navbar .getstarted:focus {
+        background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        color: white;
+        border-radius: 30px;
+        padding: 10px 25px;
+        margin-left: 30px;
+        font-weight: 500;
+        transition: all 0.3s;
+    }
+    
+    .navbar .getstarted:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .mobile-nav-toggle {
+        display: none !important;
+    }
+    
+    /* Hero Section */
+    #hero {
+        width: 100%;
+        height: 100vh; 
+        min-height: 100vh; 
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(240, 244, 248, 0.9) 100%), url('{% static "img/hero-bg.jpg" %}') center center;
+        background-size: cover;
+        position: relative;
+        padding: 0; 
+        margin: 0; 
+        display: flex;
+        align-items: center;
+    }
+    
+    #hero h1 {
+        margin: 0;
+        font-size: 52px;
+        font-weight: 700;
+        line-height: 56px;
+        color: var(--primary-color);
+    }
+    
+    #hero h2 {
+        color: #555;
+        margin: 10px 0 30px 0;
+        font-size: 24px;
+        font-weight: 400;
+    }
+    
+    #hero .btn-get-started {
+        font-weight: 500;
+        font-size: 16px;
+        letter-spacing: 1px;
+        display: inline-block;
+        padding: 12px 32px;
+        border-radius: 50px;
+        transition: 0.5s;
+        color: white;
+        background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        box-shadow: 0 8px 28px rgba(94, 114, 235, 0.2);
+    }
+    
+    #hero .btn-get-started:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(94, 114, 235, 0.4);
+    }
+    
+    #hero .animated {
+        animation: up-down 2s ease-in-out infinite alternate-reverse both;
+    }
+    
+    @keyframes up-down {
+        0% {
+            transform: translateY(10px);
+        }
+        100% {
+            transform: translateY(-10px);
+        }
+    }
+    
+    /* Sections General */
+    section {
+        padding: 80px 0;
+        overflow: hidden;
+    }
+    
+    #services, #blogs, #about {
+        padding-top: 120px;
+        margin-top: -40px;
+        scroll-margin-top: 80px;
+    }
+    
+    .section-bg {
+        background-color: #f8f9fa;
+    }
+    
+    .section-title {
+        text-align: center;
+        padding-bottom: 40px;
+    }
+    
+    .section-title h2 {
+        font-size: 32px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        position: relative;
+        color: var(--dark-color);
+    }
+    
+    .section-title h2::after {
+        content: '';
+        position: absolute;
+        display: block;
+        width: 50px;
+        height: 3px;
+        background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        bottom: 0;
+        left: calc(50% - 25px);
+    }
+    
+    /* Features Section */
+    .services .icon-box {
+        text-align: center;
+        padding: 40px 20px;
+        transition: all ease-in-out 0.3s;
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 5px 30px rgba(0, 0, 0, 0.05);
+        height: 100%;
+    }
+    
+    .services .icon-box:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .services .icon {
+        margin: 0 auto 20px auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .services .icon i {
+        font-size: 36px;
+        line-height: 1;
+        color: white;
+    }
+    
+    .services .icon-box h4 {
+        font-weight: 600;
+        margin: 10px 0 15px 0;
+        font-size: 20px;
+        position: relative;
+        padding-bottom: 15px;
+    }
+    
+    .services .icon-box h4::after {
+        content: '';
+        position: absolute;
+        display: block;
+        width: 30px;
+        height: 2px;
+        background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        bottom: 0;
+        left: calc(50% - 15px);
+    }
+    
+    .services .icon-box p {
+        line-height: 24px;
+        font-size: 14px;
+        margin-bottom: 0;
+    }
+    
+    .services .iconbox-blue .icon {
+        background: linear-gradient(to right, #5e72eb, #7eb6ff);
+        box-shadow: 0 5px 15px rgba(94, 114, 235, 0.3);
+    }
+    
+    .services .iconbox-orange .icon {
+        background: linear-gradient(to right, #ff9a9e, #fad0c4);
+        box-shadow: 0 5px 15px rgba(255, 154, 158, 0.3);
+    }
+    
+    .services .iconbox-pink .icon {
+        background: linear-gradient(to right, #a18cd1, #fbc2eb);
+        box-shadow: 0 5px 15px rgba(161, 140, 209, 0.3);
+    }
+    
+    /* Blogs Section */
+    #blogs {
+        padding: 80px 0;
+        background: #f8f9fa;
+    }
+    
+    .hvrbox {
+        position: relative;
+        width: 100%;
+        height: 300px;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        transition: all 0.3s;
+    }
+    
+    .hvrbox:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+    
+    .hvrbox img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: all 0.3s;
+    }
+    
+    .hvrbox:hover img {
+        transform: scale(1.05);
+    }
+    
+    .hvrbox-layer_top {
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(94, 114, 235, 0.8);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+    }
+    
+    .hvrbox:hover .hvrbox-layer_top {
+        opacity: 1;
+    }
+    
+    .hvrbox-text {
+        text-align: center;
+        font-size: 16px;
+        font-weight: 500;
+        padding: 0 30px;
+    }
+    
+    /* About Section */
+    .about {
+        background: white;
+    }
+    
+    .about .content h3 {
+        font-weight: 600;
+        font-size: 26px;
+        color: var(--dark-color);
+    }
+    
+    .about .content p {
+        font-size: 15px;
+        line-height: 1.8;
+    }
+    
+    .about .content .fst-italic {
+        font-style: italic;
+        color: #555;
+    }
+    
+    .about .content img {
+        border-radius: 16px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Footer */
+    .footer {
+        text-align: center;
+        padding: 20px 0;
+        background: #f8f9fa;
+        border-top: 1px solid #eee;
+        color: #555;
+        font-size: 14px;
+    }
+    
+    /* Responsive */
+    @media (max-width: 991px) {
+        #hero {
+            height: auto;
+            padding: 120px 0 60px 0;
+        }
+        #hero .animated {
+            animation: none;
+        }
+        #hero .hero-img {
+            text-align: center;
+        }
+        #hero .hero-img img {
+            width: 60%;
+        }
+        #hero h1 {
+            font-size: 32px;
+            line-height: 36px;
+        }
+        #hero h2 {
+            font-size: 18px;
+            line-height: 24px;
+        }
+        
+        .navbar ul {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+        
+        .navbar li {
+            margin: 0 10px;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        #hero h1 {
+            font-size: 28px;
+            line-height: 32px;
+        }
+        #hero h2 {
+            font-size: 16px;
+            line-height: 22px;
+        }
+        #hero .hero-img img {
+            width: 80%;
+        }
+        
+        .navbar ul {
+            flex-wrap: wrap;
+        }
+        
+        .navbar .getstarted {
+            margin-top: 10px;
+        }
+    }
+</style>
+</head> <body> <!-- Scroll Progress Indicator --> <div class="scroll-progress-container"> <div class="scroll-progress-bar"></div> </div>
+text
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+        <h1 class="logo"><a href="/">Mentara</a></h1>
+
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+                <li><a class="nav-link scrollto" href="#services">Features</a></li>
+                <li><a class="nav-link scrollto" href="#blogs">Resources</a></li>
+                <li><a class="nav-link scrollto" href="#about">About</a></li>
+                <li><a class="getstarted scrollto" href="/chatroom">Chat with Mentara</a></li>
+            </ul>
+        </nav>
+        <!-- .navbar -->
+    </div>
+</header>
+<!-- End Header -->
+
+<!-- ======= Hero Section ======= -->
+<section id="hero" class="d-flex align-items-center">
+    <div class="container-fluid" data-aos="fade-up">
+        <div class="row justify-content-center">
+            <div class="col-xl-5 col-lg-6 pt-3 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center">
+                <h1>Your Mental Wellness Companion</h1>
+                <h2>A safe space to share your thoughts and feelings anytime, anywhere</h2>
+                <div><a href="/chatroom" class="btn-get-started scrollto">Chat with Mentara</a></div>
+            </div>
+            <div class="col-xl-4 col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="150">
+                <img src="{% static 'img/chatbot.png' %}" class="img-fluid animated" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Hero -->
+
+<main id="main">
+    <!-- ======= Services Section ======= -->
+    <section id="services" class="services section-bg">
+        <div class="container" data-aos="fade-up">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Features</h2>
+                <p>Mentara offers a range of tools to support your mental wellbeing journey</p>
+            </div>
+
+            <div class="row gy-4">
+                <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+                    <div class="icon-box iconbox-blue">
+                        <div class="icon">
+                            <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke="none" stroke-width="0" fill="#f5f5f5" d="M300,521.0016835830174C376.1290562159157,517.8887921683347,466.0731472004068,529.7835943286574,510.70327084640275,468.03025145048787C554.3714126377745,407.6079735673963,508.03601936045806,328.9844924480964,491.2728898941984,256.3432110539036C474.5976632858925,184.082847569629,479.9380746630129,96.60480741107993,416.23090153303,58.64404602377083C348.86323505073057,18.502131276798302,261.93793281208167,40.57373210992963,193.5410806939664,78.93577620505333C130.42746243093433,114.334589627462,98.30271207620316,179.96522072025542,76.75703585869454,249.04625023123273C51.97151888228291,328.5150500222984,13.704378332031375,421.85034740162234,66.52175969318436,486.19268352777647C119.04800174914682,550.1803526380478,217.28368757567262,524.383925680826,300,521.0016835830174"></path>
+                            </svg>
+                            <i class="bi bi-emoji-smile"></i>
+                        </div>
+                        <h4><a href="">Mood Enhancement</a></h4>
+                        <p>Mentara uses evidence-based techniques to help improve your mood and emotional wellbeing through personalized conversations.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+                    <div class="icon-box iconbox-orange">
+                        <div class="icon">
+                            <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke="none" stroke-width="0" fill="#f5f5f5" d="M300,582.0697525312426C382.5290701553225,586.8405444964366,449.9789794690241,525.3245884688669,502.5850820975895,461.55621195738473C556.606425686781,396.0723002908107,615.8543463187945,314.28637112970534,586.6730223649479,234.56875336149918C558.9533121215079,158.8439757836574,454.9685369536778,164.00468322053177,381.49747125262974,130.76875717737553C312.15926192815925,99.40240125094834,248.97055460311594,18.661163978235184,179.8680185752513,50.54337015887873C110.5421016452524,82.52863877960104,119.82277516462835,180.83849132639028,109.12597500060166,256.43424936330496C100.08760227029461,320.3096726198365,92.17705696193138,384.0621239912766,124.79988738764834,439.7174275375508C164.83382741302287,508.01625554203684,220.96474134820875,577.5009287672846,300,582.0697525312426"></path>
+                            </svg>
+                            <i class="bi bi-lightbulb"></i>
+                        </div>
+                        <h4><a href="">Personalized Support</a></h4>
+                        <p>Get tailored suggestions and coping strategies based on your specific needs and emotional state.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="300">
+                    <div class="icon-box iconbox-pink">
+                        <div class="icon">
+                            <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke="none" stroke-width="0" fill="#f5f5f5" d="M300,541.5067337569781C382.14930387511276,545.0595476570109,479.8736841581634,548.3450877840088,526.4010558755058,480.5488172755941C571.5218469581645,414.80211281144784,517.5187510058486,332.0715597781072,496.52539010469104,255.14436215662573C477.37192572678356,184.95920475031193,473.57363656557914,105.61284051026155,413.0603344069578,65.22779650032875C343.27470386102294,18.654635553484475,251.2091493199835,5.337323636656869,175.0934190732945,40.62881213300186C97.87086631185822,76.43348514350839,51.98124368387456,156.15599469081315,36.44837278890362,239.84606092416172C21.716077023791087,319.22268207091537,43.775223500013084,401.1760424656574,96.891909868211,461.97329694683043C147.22146801428983,519.5804099606455,223.5754009179313,538.201503339737,300,541.5067337569781"></path>
+                            </svg>
+                            <i class="bi bi-graph-up"></i>
+                        </div>
+                        <h4><a href="">Progress Tracking</a></h4>
+                        <p>Monitor your emotional wellbeing over time and identify patterns to better understand your mental health journey.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Services Section -->
+
+    <!-- ======= Blogs Section ======= -->
+    <section id="blogs">
+        <div class="container" data-aos="fade-up">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Mental Health Resources</h2>
+                <p>Explore articles and insights to support your wellbeing</p>
+            </div>
+            <div class="row gy-4">
+                <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
+                    <a href='https://medium.com/heartsupport/mental-illness-is-not-a-personal-failure-612a3a03894a'>
+                        <div class="hvrbox">
+                            <img class='blog1 img-fluid' src="{% static 'img/blog 1.jpg' %}">
+                            <div class="hvrbox-layer_top">
+                                <div class="hvrbox-text">Mental Illness Is Not a Personal Failure</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+                    <a href='https://www.statnews.com/2017/05/31/mental-health-medicine/'>
+                        <div class="hvrbox">
+                            <img class='blog2 img-fluid' src="{% static 'img/blog 2.jpg' %}">
+                            <div class="hvrbox-layer_top">
+                                <div class="hvrbox-text">The Importance of Mental Health in Medicine</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="300">
+                    <a href='https://milliecaffull.medium.com/the-mental-health-recovery-paradox-aa0cb4aa1974'>
+                        <div class="hvrbox">
+                            <img class='blog3 img-fluid' src="{% static 'img/blog 3.jpg' %}">
+                            <div class="hvrbox-layer_top">
+                                <div class="hvrbox-text">The Mental Health Recovery Journey</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Blogs Section -->
+
+    <!-- ======= About Section ======= -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>About Mentara</h2>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-left" data-aos-delay="150">
+                    <img src="{% static 'img/about.png' %}" class="img-fluid" alt="">
+                </div>
+                <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content" data-aos="fade-right">
+                    <p class="fst-italic">
+                        Mental disorders are usually treated by pharmacotherapy or psychotherapy. However, there is a global shortage of human resources for delivering such mental health services. In developed countries there are nine psychiatrists per 100,000 people available,
+                        while in developing countries there is one psychiatrist per ten million people.
+                        <br><br>
+                        To address this problem, conversational agents have arisen interest in recent years, particularly in psychoeducation, behaviour change and self-help. Mentara is a rasa based conversational chatbot developed with help of cognitive behavioural therapy with a view of helping people tackle their daily mental issues. Mentara helps users deal with issues such
+                        as anxiety, depression, getting rid of sad thoughts, and more.
+                        <br><br>
+                        Mentara uses natural language understanding to converse with users. It also maintains a journal to track the progress of users' conditions. Mentara also provides comfort and suggestions for dealing with the issues they are facing.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End About Section -->
+
+    <!-- start footer Section -->
+    <footer>
+        <div class="footer">
+            <p>© 2025 Mentara | Designed with 💙 by Drishaan</p>
+        </div>
+    </footer>
+    <!-- End footer Section -->
+</main>
+
+<!-- Vendor JS Files -->
+<script src="{% static 'vendor/aos/aos.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
+<script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
+
+<!-- Template Main JS File -->
+<script src="{% static 'js/main.js' %}"></script>
+
+<!-- AOS JS -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<!-- Additional script for smooth scrolling and animations -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize AOS
+        AOS.init({
+            offset: 120,
+            delay: 0,
+            duration: 800,
+            easing: 'ease',
+            once: false
+        });
+        
+        // Add smooth scrolling to all links
+        document.querySelectorAll('a.nav-link.scrollto').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    // Update active class
+                    document.querySelectorAll('.nav-link.scrollto').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // Add animation class to target section
+                    targetElement.classList.add('section-animated');
+                    setTimeout(() => {
+                        targetElement.classList.remove('section-animated');
+                    }, 1000);
+                    
+                    // Scroll to the target
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Set active menu item based on scroll position
+        window.addEventListener('scroll', function() {
+            const sections = ['#hero', '#services', '#blogs', '#about'];
+            let current = '';
+            
+            sections.forEach(section => {
+                const element = document.querySelector(section);
+                if (element) {
+                    const sectionTop = element.offsetTop - 100;
+                    if (pageYOffset >= sectionTop) {
+                        current = section;
+                    }
+                }
+            });
+            
+            document.querySelectorAll('.nav-link.scrollto').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === current) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Update scroll progress bar
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.querySelector('.scroll-progress-bar').style.width = scrolled + '%';
+        });
+    });
+</script>
+</body> </html>

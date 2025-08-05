@@ -1,0 +1,93 @@
+version: "3.1"
+
+rules:
+
+- rule: Respond to greetings
+  steps:
+  - intent: greet
+  - action: utter_greet
+
+- rule: Handle exam stress directly
+  steps:
+  - intent: exam_anxiety
+  - action: action_handle_exam_stress
+
+- rule: User accepts offered technique (high priority)
+  condition:
+  - slot_was_set:
+      - offered_strategy: true
+  - slot_was_set:
+      - crisis_level: none
+  steps:
+  - intent: affirm
+  - action: action_provide_offered_technique
+
+- rule: User declines offered technique
+  condition:
+  - slot_was_set:
+      - offered_strategy: true
+  steps:
+  - intent: deny
+  - action: action_handle_breathing_decline
+
+- rule: Handle family pressure directly
+  steps:
+  - intent: family_pressure
+  - action: action_handle_family_pressure
+
+- rule: Handle crisis situations immediately
+  steps:
+  - intent: crisis_indication
+  - action: action_detect_crisis
+
+- rule: Handle assessment requests
+  steps:
+  - intent: start_assessment
+  - action: action_start_assessment_choice
+
+- rule: Crisis follow-up - user wants help (crisis only)
+  condition:
+  - slot_was_set:
+      - crisis_level: high
+  - slot_was_set:
+      - conversation_phase: crisis_intervention
+  - slot_was_set:
+      - offered_strategy: null
+  steps:
+  - intent: affirm
+  - action: action_provide_ongoing_support
+
+- rule: Handle chitchat
+  steps:
+  - intent: chitchat
+  - action: respond_chitchat
+
+- rule: Handle FAQ
+  steps:
+  - intent: faq
+  - action: respond_faq
+
+- rule: Say goodbye anytime
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- rule: Bot challenge
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot
+
+- rule: Handle differentiation
+  steps:
+  - intent: compare_with_chatgpt
+  - action: action_provide_professional_differentiation
+
+- rule: Redirect out of scope
+  steps:
+  - intent: out_of_scope
+  - action: action_redirect_to_mental_health
+
+- rule: Handle fallback
+  steps:
+  - intent: nlu_fallback
+  - action: action_default_fallback

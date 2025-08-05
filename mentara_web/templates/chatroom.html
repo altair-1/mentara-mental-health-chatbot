@@ -1,0 +1,465 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Chat with Mentara</title>
+    <meta charset="utf-8" />
+    <link href="{% static 'img/chatbot.png' %}" rel="icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Chatroom library -->
+    <link rel="stylesheet" href="https://unpkg.com/@scalableminds/chatroom@0.10.0/dist/Chatroom.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* --------------------------chatbox---------------------------------- */
+        body {
+            background: #c5d8ff;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        * { box-sizing: border-box; }
+
+        /* Chat container */
+        .chat-container {
+            width: 420px;
+            height: 650px;
+            display: flex;
+            flex-direction: column;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            background: #ffffff;
+            position: relative;
+            z-index: 100;
+        }
+
+        @media (max-width: 450px) {
+            .chat-container {
+                margin: 20px 10px;
+                width: 95%;
+                height: 85vh;
+            }
+        }
+
+        /* Chatroom takes full height */
+        .chatroom {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            margin: 0;
+            position: relative;
+        }
+
+        /* --- Chat header --- */
+        .chatroom h3 {
+            background: linear-gradient(to right, #5e72eb, #7eb6ff);
+            color: #fff;
+            padding: 16px;
+            margin: 0;
+            font-size: 18px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            flex-shrink: 0;
+        }
+        .chatroom h3:before {
+            content: "";
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background: url("{% static 'img/chatbot.png' %}") center/contain no-repeat;
+            margin-right: 10px;
+        }
+
+        /* --- Messages area --- */
+        .chatroom .chats {
+            flex: 1;
+            padding: 20px 20px 80px 20px;
+            overflow-y: auto;
+            background: #f8f9fa url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Scrollbar styling */
+        .chatroom .chats::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chatroom .chats::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .chatroom .chats::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 10px;
+        }
+        .chatroom .chats::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+
+        /* --- Message bubbles --- */
+        .chatroom .chats .chat {
+            background: #e9f3ff;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin: 8px 0;
+            max-width: 85%;
+            font-size: 14px;
+            color: #333;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            line-height: 1.5;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            overflow-wrap: break-word;
+            hyphens: auto;
+        }
+        .chatroom .chats .chat.right {
+            background: linear-gradient(135deg,#5e72eb 0%,#7eb6ff 100%);
+            color: #fff;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+        .chatroom .chats .chat.left {
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        /* Timestamp styling */
+        .chatroom .chats .time {
+            font-size: 11px;
+            color: #888;
+            margin-top: 5px;
+            clear: both;
+        }
+        .chatroom .chats .time.left {
+            float: left;
+        }
+        .chatroom .chats .time.right {
+            float: right;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* --- Input area positioned absolutely at bottom --- */
+        .chatroom .input {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border-top: 1px solid #eaeaea;
+            padding: 12px;
+            height: 64px;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
+
+        /* Replace input with textarea for auto-expansion */
+        .chatroom .input input[type=text] {
+            display: none !important; /* Hide original input */
+        }
+
+        /* Custom expanding textarea */
+        .chatroom .input textarea,
+        .chatroom .input .expanding-input {
+            flex: 1;
+            height: 40px;
+            min-height: 40px;
+            max-height: 40px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 20px;
+            background: #f1f3f4;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            resize: none;
+            overflow: hidden;
+            transition: all .2s;
+            line-height: 1.4;
+            word-wrap: break-word;
+            outline: none;
+        }
+
+        .chatroom .input textarea:focus,
+        .chatroom .input .expanding-input:focus {
+            background: #fff;
+            box-shadow: 0 0 0 2px rgba(94,114,235,.3);
+        }
+
+        .chatroom .input input[type=submit] {
+            width: 40px;
+            height: 40px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 50%;
+            background: linear-gradient(to right,#5e72eb,#7eb6ff);
+            color: #fff;
+            cursor: pointer;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .2s;
+            font-size: 16px;
+        }
+        .chatroom .input input[type=submit]:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(94,114,235,.3);
+        }
+        .chatroom .input input[type=submit]:active {
+            transform: scale(.95);
+        }
+
+        /* Speech input button */
+        .chatroom #speech-input {
+            width: 40px;
+            height: 40px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 50%;
+            background: linear-gradient(to right,#5e72eb,#7eb6ff);
+            color: #fff;
+            cursor: pointer;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .2s;
+        }
+        .chatroom #speech-input:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(94,114,235,.3);
+        }
+
+        /* Avatar styling */
+        .bot-avatar, .human-avatar {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+        }
+        
+        .bot-avatar {
+            left: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .human-avatar {
+            right: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .bot-avatar img, .human-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        @media (max-width: 1200px) {
+            .bot-avatar, .human-avatar {
+                width: 80px;
+                height: 80px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .bot-avatar, .human-avatar {
+                display: none;
+            }
+        }
+
+        /* Loading indicator */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .loading.active {
+            display: block;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+        /* Error message */
+        .error-message {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: white;
+            background-color: rgba(255, 107, 107, 0.8);
+            border-radius: 8px;
+            margin: 20px auto;
+            max-width: 400px;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        
+        .error-message.active {
+            display: block;
+        }
+
+        /* Enhanced responsive design */
+        @media (max-width: 500px) {
+            .chat-container {
+                width: 95%;
+                height: 90vh;
+                margin: 10px;
+            }
+            
+            .chatroom .chats {
+                padding: 15px 15px 80px 15px;
+            }
+            
+            .chatroom .chats .chat {
+                max-width: 90%;
+                font-size: 13px;
+            }
+        }
+        /* --------------------------chatbox---------------------------------- */
+    </style>
+</head>
+
+<body>
+
+    <!-- Avatars -->
+    <div class="bot-avatar"><img src="{% static 'img/bot.png' %}" alt="Bot"></div>
+    <div class="human-avatar"><img src="{% static 'img/human.png' %}" alt="Human"></div>
+
+    <!-- Loaders / error -->
+    <div id="loading-indicator" class="loading active">
+        <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <style>.spinner{transform-origin:center;animation:spin .75s linear infinite}@keyframes spin{100%{transform:rotate(360deg)}}</style>
+            <path class="spinner" fill="#fff" d="M10.14 1.16a11 11 0 0 0-9 8.92A1.59 1.59 0 0 0 2.46 12 1.52 1.52 0 0 0 4.11 10.7a8 8 0 0 1 6.66-6.61A1.42 1.42 0 0 0 12 2.69 1.57 1.57 0 0 0 10.14 1.16Z"/>
+        </svg>
+        Loading chatbot interface...
+    </div>
+    <div id="error-message" class="error-message">Could not load the chatbot. Please make sure the Rasa server is running.</div>
+
+    <!-- Chat container rendered by Chatroom.js -->
+    <div class="chat-container"></div>
+
+    <!-- Chatroom JS -->
+    <script src="https://unpkg.com/@scalableminds/chatroom@0.10.0/dist/Chatroom.js"></script>
+
+    <script>
+        /* --- Init helpers --- */
+        function showError() {
+            document.getElementById('loading-indicator').className = 'loading';
+            document.getElementById('error-message').className = 'error-message active';
+        }
+
+        function createChatroom() {
+            try {
+                window.chatroom = new window.Chatroom({
+                    host: "http://localhost:5005",
+                    title: "Chat with Mentara",
+                    container: document.querySelector(".chat-container"),
+                    welcomeMessage: "Hello, I'm Mentara, your mental health support companion. How are you feeling today?",
+                    speechRecognition: "en-US",
+                    voiceLang: "en-US"
+                });
+                chatroom.openChat();
+                document.getElementById('loading-indicator').className = 'loading';
+
+                // Add auto-expanding textarea functionality after chatroom loads
+                setTimeout(addAutoExpandingInput, 500);
+            } catch (e) { 
+                showError(); 
+            }
+        }
+
+        function addAutoExpandingInput() {
+            const inputContainer = document.querySelector('.chatroom .input');
+            const originalInput = inputContainer.querySelector('input[type="text"]');
+            
+            if (originalInput && !inputContainer.querySelector('textarea')) {
+                // Create expanding textarea
+                const textarea = document.createElement('textarea');
+                textarea.placeholder = originalInput.placeholder || 'Type a message...';
+                textarea.className = 'expanding-input';
+                textarea.style.height = '40px';
+                
+                // Simple input functionality - no auto-expand to maintain consistent height
+                textarea.addEventListener('input', function() {
+                    // Keep fixed height for consistent layout
+                    this.style.height = '40px';
+                });
+
+                // Handle Enter key (send message)
+                textarea.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        const submitBtn = inputContainer.querySelector('input[type="submit"]');
+                        if (submitBtn && this.value.trim()) {
+                            // Copy value to original input and trigger submit
+                            originalInput.value = this.value;
+                            submitBtn.click();
+                            this.value = '';
+                            this.style.height = '40px';
+                        }
+                    }
+                });
+
+                // Insert textarea before submit button
+                const submitBtn = inputContainer.querySelector('input[type="submit"]');
+                inputContainer.insertBefore(textarea, submitBtn);
+                
+                // Hide original input
+                originalInput.style.display = 'none';
+            }
+        }
+
+        function initChatroom() {
+            if (typeof window.Chatroom !== 'function') { 
+                showError(); 
+                return; 
+            }
+
+            fetch("http://localhost:5005/status")
+                .then(r => { if (!r.ok) throw Error(); return r.json(); })
+                .then(() => createChatroom())
+                .catch(() => createChatroom()); // Still try to create even if status check fails
+        }
+
+        if (document.readyState === 'complete') { 
+            initChatroom(); 
+        } else {
+            window.addEventListener('load', () => setTimeout(initChatroom, 700));
+        }
+    </script>
+
+</body>
+</html>

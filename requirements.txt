@@ -1,0 +1,8 @@
+rasa
+mysql-connector-python
+tensorflow
+numpy
+pandas
+scikit-learn
+django
+nltk==3.8.1
