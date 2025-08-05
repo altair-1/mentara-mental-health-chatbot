@@ -1,3 +1,4 @@
+@"
 # Virtual Environment
 venv/
 .venv/
@@ -11,14 +12,12 @@ __pycache__/
 
 # Rasa
 .rasa/
-models/*.tar.gz
+models/
 
 # Database files
 *.db
 *.db-shm
 *.db-wal
-rasa.db
-events.db
 
 # IDE
 .vscode/
@@ -28,17 +27,16 @@ events.db
 .DS_Store
 Thumbs.db
 
-# Logs
-*.log
+# Results and tests
+results/
+tests/
 
 # Node
 node_modules/
 package-lock.json
 
-# Results and tests
-results/
-tests/__pycache__/
-
 # Large files
+*.pkl
 *.tar.gz
 *.zip
+"@ | Out-File -FilePath .gitignore -Encoding utf8
