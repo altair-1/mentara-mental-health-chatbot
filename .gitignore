@@ -1,8 +1,6 @@
-# Created by venv; see https://docs.python.org/3/library/venv.html
-*
 # Virtual Environment
-.venv/
 venv/
+.venv/
 env/
 
 # Python Cache
@@ -10,17 +8,21 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
-.Python
 
 # Rasa
-models/
 .rasa/
+models/*.tar.gz
+
+# Database files
+*.db
+*.db-shm
+*.db-wal
+rasa.db
+events.db
 
 # IDE
 .vscode/
 .idea/
-*.swp
-*.swo
 
 # OS
 .DS_Store
@@ -28,14 +30,15 @@ Thumbs.db
 
 # Logs
 *.log
-logs/
 
-# Environment variables
-.env
-
-# Node modules (if any)
+# Node
 node_modules/
+package-lock.json
 
-# Temporary files
-*.tmp
-*.temp
+# Results and tests
+results/
+tests/__pycache__/
+
+# Large files
+*.tar.gz
+*.zip

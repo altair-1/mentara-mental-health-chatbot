@@ -1,34 +1,52 @@
-refer to this youtube video in order to know "how to run the project" : https://youtu.be/XMAw_bKTLbA?si=XIRTCmmNn8Db2-ri
+Mentara – Mental Health Chatbot
+Mentara is a privacy-focused, locally deployed mental health chatbot designed for Indian students. It integrates Rasa for conversational intelligence and Django for the web interface. The system runs entirely offline, ensuring no data leaves the device.
 
-# Psykh: Mental Health Chatbot
+Features
+- Sentiment analysis using NLTK VADER with regex overrides for phrases like "not feeling great"
+- Crisis intervention with verified Indian helpline numbers (112, 9152987821, Aasra)
+- Five coping techniques: breathing exercises, grounding, muscle relaxation, cognitive restructuring, and journaling prompts
+- PHQ-9 and GAD-7 screenings for depression and anxiety symptoms
+- Context-aware dialogue handling to avoid repetitive or irrelevant responses
 
-## Project Screenshots
+Tech Stack
+- Rasa – NLU and dialogue management
+- Django – Web server and interface
+- NLTK VADER – Sentiment analysis
+- SQLite – Development database
+- Python 3.8+
 
-### 1. Chatbot
-![Chatbot](https://github.com/ritik872000/Psykh-A-Mental-Health-Chatbot/blob/main/Project-Screenshots/Chatbot.png)
-### 2. Landing Page
-![Landing Page](https://github.com/ritik872000/Psykh-A-Mental-Health-Chatbot/blob/main/Project-Screenshots/Landing_Page.png)
-### 3. Features
-![Features](https://github.com/ritik872000/Psykh-A-Mental-Health-Chatbot/blob/main/Project-Screenshots/Features.png)
-### 4. Blogs
-![Blogs](https://github.com/ritik872000/Psykh-A-Mental-Health-Chatbot/blob/main/Project-Screenshots/Blogs.png)
-### 5. About
-![About](https://github.com/ritik872000/Psykh-A-Mental-Health-Chatbot/blob/main/Project-Screenshots/About.png)
+System Requirements
+- Python 3.8 or higher
+- Windows/Linux/macOS
+- Minimum 2GB RAM
+- Local network access for the Django server
 
-## Model Comparison
+Setup
+git clone https://github.com/altair-1/mentara-mental-health-chatbot.git
+cd mentara-mental-health-chatbot
+python -m venv venv
+# Windows
+venv\Scripts\activate
+# macOS/Linux
+source venv/bin/activate
+pip install -r requirements.txt
+python -c "import nltk; nltk.download('vader_lexicon')"
+rasa train --force
 
-### 1. Intent Classification Accuracy Comparison
-![About](https://github.com/ritik872000/Psykh-A-Mental-Health-Chatbot/blob/main/Project-Screenshots/Intent%20Results.png)
+Running
+Terminal 1:
+rasa run actions --debug
 
-DIET classifier gives higher accuracy on test set compared to SVM but in terms of speed SVM outperforms DIET that is why we've used SVM.
+Terminal 2:
+rasa run --enable-api --cors "*" --debug
 
-### 2. Entity Classification Accuracy Comparison
-![About](https://github.com/ritik872000/Psykh-A-Mental-Health-Chatbot/blob/main/Project-Screenshots/Entity%20Results.png)
+Terminal 3:
+cd mentara/web
+python manage.py runserver
 
-## Dataset Information
+Access the application at http://127.0.0.1:8000/
 
-### 1. Resources: Kaggle, Reddit
-### 2. No of Intents: 36
-### 3. NLU Examples: 1000+
+License
+MIT License. See LICENSE file for details.
 
-
+Repository: https://github.com/altair-1/mentara-mental-health-chatbot
