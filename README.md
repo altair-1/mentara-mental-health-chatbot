@@ -33,16 +33,16 @@ git clone https://github.com/altair-1/mentara-mental-health-chatbot.git
 python -m venv venv
 
 ## Activate virtual environment
-Windows
+**Windows:**
 venv\Scripts\activate
 
-macOS/Linux
+**macOS/Linux:**
 source venv/bin/activate
 
 ## Install dependencies
-pip install -r requirements.txt
+- pip install -r requirements.txt
 
-Download NLTK data
+- **Download NLTK data:**
 python -c "import nltk; nltk.download('vader_lexicon')"
 
 ## Train Rasa model
@@ -67,7 +67,6 @@ rasa run --enable-api --cors "*" --debug
 
 python manage.py runserver
 
-Access the application at: `http://127.0.0.1:8000/`
 
 
 ## License
