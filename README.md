@@ -28,7 +28,6 @@ Mentara is a privacy-focused, locally deployed mental health chatbot designed fo
 ## Installation
 
 git clone https://github.com/altair-1/mentara-mental-health-chatbot.git
-cd mentara-mental-health-chatbot
 
 ## Create virtual environment
 python -m venv venv
